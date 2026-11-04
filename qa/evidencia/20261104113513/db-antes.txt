@@ -1,0 +1,45 @@
+﻿== Conteo exacto de filas por tabla
+tabla | filas
+cash_inflows | 2
+cash_openings | 2
+cash_outflows | 1
+cash_register | 3
+categories | 2
+colors | 2
+notifications | 0
+order_items | 2
+orders | 2
+outflow_reasons | 8
+payments | 2
+permissions | 32
+product_images | 0
+product_variants | 2
+products | 2
+role_permissions | 44
+roles | 3
+shipping_addresses | 2
+sizes | 2
+stock_movements | 6
+store_config | 1
+users | 3
+(22 rows)
+== Totales de negocio
+indicador | filas | suma
+ventas (orders.total) | 2 | 200.00
+ventas no anuladas | 2 | 200.00
+pagos (payments.amount) | 2 | 200.00
+ingresos de caja | 2 | 200.00
+egresos de caja | 1 | 10.00
+stock total variantes | 2 | 26
+saldo cajas (balance) | 3 | 190.00
+sesiones de caja abiertas | 0 | 0
+(8 rows)
+== Integridad: referencias huerfanas (todas deben ser 0)
+chequeo | filas
+order_items sin orden | 0
+order_items sin variante | 0
+variantes sin producto | 0
+productos sin categoria | 0
+usuarios sin rol | 0
+pagos distintos al total | 0
+(6 rows)

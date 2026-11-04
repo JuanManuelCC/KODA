@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="KODA · Sprint 1 · Baseline de regresión (pre-migración)" tests="58" time="1.296">
+  <testsuite name="00 Sin sesión / S1-QA-001 · Listar usuarios sin sesión" id="bdac3bb7-875e-4198-bf1e-ff6de617330c" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.031">
+    <testcase name="S1-QA-001 HTTP esperado 401 (real 401)" time="0.031" classname="00SinSesionS1Qa001ListarUsuariosSinSesion"/>
+  </testsuite>
+  <testsuite name="00 Sin sesión / S1-QA-002 · Login con contraseña incorrecta" id="1bf9ec5b-7865-4f6a-9e49-1a40c023bca8" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.077">
+    <testcase name="S1-QA-002 HTTP esperado 401 (real 401)" time="0.077" classname="00SinSesionS1Qa002LoginConContrasenaIncorrecta"/>
+  </testsuite>
+  <testsuite name="01 Autenticación / S1-QA-003 · Login superadmin" id="3f93b4d8-5cd0-472a-8499-84da56ecfa62" timestamp="2026-11-04T16:35:16.969Z" tests="3" failures="0" errors="0" time="0.077">
+    <testcase name="S1-QA-003 HTTP esperado 200 (real 200)" time="0.077" classname="01AutenticacionS1Qa003LoginSuperadmin"/>
+    <testcase name="rol SUPERADMIN" time="0.077" classname="01AutenticacionS1Qa003LoginSuperadmin"/>
+    <testcase name="emite cookie de sesión" time="0.077" classname="01AutenticacionS1Qa003LoginSuperadmin"/>
+  </testsuite>
+  <testsuite name="01 Autenticación / S1-QA-004 · Usuario actual (/auth/me)" id="4e31b064-7c7f-44ce-ba4f-1385427ce2f8" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.014">
+    <testcase name="S1-QA-004 HTTP esperado 200 (real 200)" time="0.014" classname="01AutenticacionS1Qa004UsuarioActualAuthMe"/>
+    <testcase name="email coincide" time="0.014" classname="01AutenticacionS1Qa004UsuarioActualAuthMe"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-005 · Permisos agrupados por módulo" id="69112e0b-ee39-4ab0-8a59-72c4d10eade1" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.016">
+    <testcase name="S1-QA-005 HTTP esperado 200 (real 200)" time="0.016" classname="02RolesYUsuariosS1Qa005PermisosAgrupadosPorModulo"/>
+    <testcase name="existen los permisos del rol vendedor" time="0.016" classname="02RolesYUsuariosS1Qa005PermisosAgrupadosPorModulo"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-006 · Crear rol vendedor de prueba" id="52ae8708-932a-4ea3-8125-a43b272c6062" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.020">
+    <testcase name="S1-QA-006 HTTP esperado 200/201 (real 201)" time="0.020" classname="02RolesYUsuariosS1Qa006CrearRolVendedorDePrueba"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-007 · Crear usuario ordinario" id="22893153-3bd4-474a-bd3f-445bf36e7683" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.076">
+    <testcase name="S1-QA-007 HTTP esperado 200/201 (real 201)" time="0.076" classname="02RolesYUsuariosS1Qa007CrearUsuarioOrdinario"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-008 · Detalle de usuario por ID" id="1f2b359f-0a2e-4e18-9496-a8a3d3fac05f" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.013">
+    <testcase name="S1-QA-008 HTTP esperado 200 (real 200)" time="0.013" classname="02RolesYUsuariosS1Qa008DetalleDeUsuarioPorId"/>
+    <testcase name="email coincide" time="0.013" classname="02RolesYUsuariosS1Qa008DetalleDeUsuarioPorId"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-009 · Editar usuario" id="019d486c-166c-4589-bdde-f4af209dbaac" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.019">
+    <testcase name="S1-QA-009 HTTP esperado 200 (real 200)" time="0.019" classname="02RolesYUsuariosS1Qa009EditarUsuario"/>
+    <testcase name="nombre actualizado" time="0.019" classname="02RolesYUsuariosS1Qa009EditarUsuario"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-010 · Buscar usuario por email" id="d2341256-b736-46b7-aa9b-99f1043bcc28" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.016">
+    <testcase name="S1-QA-010 HTTP esperado 200 (real 200)" time="0.016" classname="02RolesYUsuariosS1Qa010BuscarUsuarioPorEmail"/>
+    <testcase name="encuentra exactamente 1" time="0.016" classname="02RolesYUsuariosS1Qa010BuscarUsuarioPorEmail"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-011 · Paginación de usuarios (limit=1)" id="f6f86f22-3e19-43f7-b5a8-15fd66f0f7d1" timestamp="2026-11-04T16:35:16.969Z" tests="4" failures="0" errors="0" time="0.016">
+    <testcase name="S1-QA-011 HTTP esperado 200 (real 200)" time="0.016" classname="02RolesYUsuariosS1Qa011PaginacionDeUsuariosLimit1"/>
+    <testcase name="máx. 1 resultado" time="0.016" classname="02RolesYUsuariosS1Qa011PaginacionDeUsuariosLimit1"/>
+    <testcase name="count total >= 1" time="0.016" classname="02RolesYUsuariosS1Qa011PaginacionDeUsuariosLimit1"/>
+    <testcase name="no lista al superadmin" time="0.016" classname="02RolesYUsuariosS1Qa011PaginacionDeUsuariosLimit1"/>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-012 · Crear usuario con email duplicado" id="b249f320-f80b-46d4-9b7b-570fe64e1cbf" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.014">
+    <testcase name="S1-QA-012 HTTP esperado 409 (real 400)" time="0.014" classname="02RolesYUsuariosS1Qa012CrearUsuarioConEmailDuplicado">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 409 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 02 Roles y usuarios / S1-QA-012 · Crear usuario con email duplicado.]]>
+        <![CDATA[Test description: S1-QA-012 HTTP esperado 409 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 409 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 409 ]
+   at Object.eval sandbox-script.js:1:12).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="02 Roles y usuarios / S1-QA-013 · Detalle de usuario inexistente" id="f5f663f1-f3eb-45cb-bea7-e24ce8d3bd93" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.014">
+    <testcase name="S1-QA-013 HTTP esperado 404 (real 400)" time="0.014" classname="02RolesYUsuariosS1Qa013DetalleDeUsuarioInexistente">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 02 Roles y usuarios / S1-QA-013 · Detalle de usuario inexistente.]]>
+        <![CDATA[Test description: S1-QA-013 HTTP esperado 404 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 404 ]
+   at Object.eval sandbox-script.js:1:13).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-014 · Crear categoría" id="025087aa-f1cb-46b8-a407-883988d7e358" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.018">
+    <testcase name="S1-QA-014 HTTP esperado 200/201 (real 201)" time="0.018" classname="03CategoriasS1Qa014CrearCategoria"/>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-015 · Detalle de categoría por ID" id="32484ab4-671f-48b1-8cc2-27c1d267d864" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.013">
+    <testcase name="S1-QA-015 HTTP esperado 200 (real 200)" time="0.013" classname="03CategoriasS1Qa015DetalleDeCategoriaPorId"/>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-016 · Editar categoría" id="8aa69687-11ff-4aff-b291-1d97946dd3a0" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.018">
+    <testcase name="S1-QA-016 HTTP esperado 200 (real 200)" time="0.018" classname="03CategoriasS1Qa016EditarCategoria"/>
+    <testcase name="nombre actualizado" time="0.018" classname="03CategoriasS1Qa016EditarCategoria"/>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-017 · Buscar categoría" id="7961a769-c7ae-43ce-94e5-8383ff2aaeee" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-017 HTTP esperado 200 (real 200)" time="0.017" classname="03CategoriasS1Qa017BuscarCategoria"/>
+    <testcase name="encuentra la categoría" time="0.017" classname="03CategoriasS1Qa017BuscarCategoria"/>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-018 · Crear categoría duplicada" id="c4b3392b-a83c-4e2a-8c5e-f7e8a1343b0b" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.019">
+    <testcase name="S1-QA-018 HTTP esperado 409 (real 409)" time="0.019" classname="03CategoriasS1Qa018CrearCategoriaDuplicada"/>
+  </testsuite>
+  <testsuite name="03 Categorías / S1-QA-019 · Detalle de categoría inexistente" id="452f916c-08bd-4a76-a7e0-f3f2b277791e" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.015">
+    <testcase name="S1-QA-019 HTTP esperado 404 (real 404)" time="0.015" classname="03CategoriasS1Qa019DetalleDeCategoriaInexistente"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-020 · Crear color" id="76d64087-5a39-4a7f-af69-b46b9f0976e5" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.015">
+    <testcase name="S1-QA-020 HTTP esperado 200/201 (real 201)" time="0.015" classname="04ProductosVariantesYStockS1Qa020CrearColor"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-021 · Crear talla" id="29c17140-393d-4ed3-889a-7b0ebc2ca74f" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.015">
+    <testcase name="S1-QA-021 HTTP esperado 200/201 (real 201)" time="0.015" classname="04ProductosVariantesYStockS1Qa021CrearTalla"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-022 · Crear producto" id="2a02cf04-dc98-4302-ac32-354d7c229e98" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-022 HTTP esperado 200/201 (real 201)" time="0.017" classname="04ProductosVariantesYStockS1Qa022CrearProducto"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-023 · Crear variante con stock 10" id="7936f8fc-f59e-40d4-b72d-376ee098b4c0" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.020">
+    <testcase name="S1-QA-023 HTTP esperado 200/201 (real 201)" time="0.020" classname="04ProductosVariantesYStockS1Qa023CrearVarianteConStock10"/>
+    <testcase name="stock inicial 10" time="0.020" classname="04ProductosVariantesYStockS1Qa023CrearVarianteConStock10"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-024 · Agregar 5 unidades de stock" id="cd28bd80-3732-427b-a890-c4bbf4c8e942" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.020">
+    <testcase name="S1-QA-024 HTTP esperado 200 (real 200)" time="0.020" classname="04ProductosVariantesYStockS1Qa024Agregar5UnidadesDeStock"/>
+    <testcase name="stock = 15" time="0.020" classname="04ProductosVariantesYStockS1Qa024Agregar5UnidadesDeStock"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-025 · Detalle de variante por ID" id="d6e18395-0007-4044-9cee-521e813eb563" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.015">
+    <testcase name="S1-QA-025 HTTP esperado 200 (real 200)" time="0.015" classname="04ProductosVariantesYStockS1Qa025DetalleDeVariantePorId"/>
+    <testcase name="stock persistido = 15" time="0.015" classname="04ProductosVariantesYStockS1Qa025DetalleDeVariantePorId"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-026 · Detalle de producto por ID" id="43e71b7b-7167-4f73-aa07-735ec588193c" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.020">
+    <testcase name="S1-QA-026 HTTP esperado 200 (real 200)" time="0.020" classname="04ProductosVariantesYStockS1Qa026DetalleDeProductoPorId"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-027 · Editar producto" id="ae5043fe-ba75-4741-9df9-755e5faf1d58" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.023">
+    <testcase name="S1-QA-027 HTTP esperado 200 (real 200)" time="0.023" classname="04ProductosVariantesYStockS1Qa027EditarProducto"/>
+    <testcase name="nombre actualizado" time="0.023" classname="04ProductosVariantesYStockS1Qa027EditarProducto"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-028 · Buscar producto" id="a4fa9da4-ba16-4c53-9261-1627b01917f6" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-028 HTTP esperado 200 (real 200)" time="0.017" classname="04ProductosVariantesYStockS1Qa028BuscarProducto"/>
+    <testcase name="encuentra el producto" time="0.017" classname="04ProductosVariantesYStockS1Qa028BuscarProducto"/>
+  </testsuite>
+  <testsuite name="04 Productos, variantes y stock / S1-QA-029 · Detalle de producto inexistente" id="16c6cae2-8dba-4137-8948-60c418a7bfef" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.014">
+    <testcase name="S1-QA-029 HTTP esperado 404 (real 400)" time="0.014" classname="04ProductosVariantesYStockS1Qa029DetalleDeProductoInexistente">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 404 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 04 Productos, variantes y stock / S1-QA-029 · Detalle de producto inexistente.]]>
+        <![CDATA[Test description: S1-QA-029 HTTP esperado 404 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 404 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 404 ]
+   at Object.eval sandbox-script.js:1:29).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="05 Caja: apertura y egreso / S1-QA-030 · Crear caja física" id="ac2ac0c8-7c02-449f-b896-3bf95b8fbbb4" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.015">
+    <testcase name="S1-QA-030 HTTP esperado 200/201 (real 201)" time="0.015" classname="05CajaAperturaYEgresoS1Qa030CrearCajaFisica"/>
+  </testsuite>
+  <testsuite name="05 Caja: apertura y egreso / S1-QA-031 · Abrir caja con 100" id="6bdd3079-e832-499f-9d65-d9a616298de5" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-031 HTTP esperado 200/201 (real 201)" time="0.017" classname="05CajaAperturaYEgresoS1Qa031AbrirCajaCon100"/>
+  </testsuite>
+  <testsuite name="05 Caja: apertura y egreso / S1-QA-032 · Estado de caja abierta" id="5285cb02-ae5d-47cd-a13c-29f80e4dd209" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.014">
+    <testcase name="S1-QA-032 HTTP esperado 200 (real 200)" time="0.014" classname="05CajaAperturaYEgresoS1Qa032EstadoDeCajaAbierta"/>
+    <testcase name="monto inicial 100" time="0.014" classname="05CajaAperturaYEgresoS1Qa032EstadoDeCajaAbierta"/>
+  </testsuite>
+  <testsuite name="05 Caja: apertura y egreso / S1-QA-033 · Listar motivos de egreso" id="17b1a20f-511c-48f3-a04e-e57034dc856a" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.018">
+    <testcase name="S1-QA-033 HTTP esperado 200 (real 200)" time="0.018" classname="05CajaAperturaYEgresoS1Qa033ListarMotivosDeEgreso"/>
+    <testcase name="hay un motivo activo utilizable" time="0.018" classname="05CajaAperturaYEgresoS1Qa033ListarMotivosDeEgreso"/>
+  </testsuite>
+  <testsuite name="05 Caja: apertura y egreso / S1-QA-034 · Egreso de 10 contra el fondo inicial (sin ventas aún)" id="d67c8533-d874-41cb-8a93-7076994c158c" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.012">
+    <testcase name="S1-QA-034 HTTP esperado 200/201 (real 400)" time="0.012" classname="05CajaAperturaYEgresoS1Qa034EgresoDe10ContraElFondoInicialSinVentasAun">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 200, 201 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 05 Caja: apertura y egreso / S1-QA-034 · Egreso de 10 contra el fondo inicial (sin ventas aún).]]>
+        <![CDATA[Test description: S1-QA-034 HTTP esperado 200/201 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 200, 201 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 200, 201 ]
+   at Object.eval sandbox-script.js:1:34).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-035 · Crear venta: 2 u. x 50 en efectivo" id="0f994b0a-891a-481f-ac73-9bff89217a5a" timestamp="2026-11-04T16:35:16.969Z" tests="3" failures="0" errors="0" time="0.031">
+    <testcase name="S1-QA-035 HTTP esperado 200/201 (real 201)" time="0.031" classname="06VentaYReciboS1Qa035CrearVenta2UX50EnEfectivo"/>
+    <testcase name="total = 100" time="0.031" classname="06VentaYReciboS1Qa035CrearVenta2UX50EnEfectivo"/>
+    <testcase name="asociada a la caja QA" time="0.031" classname="06VentaYReciboS1Qa035CrearVenta2UX50EnEfectivo"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-036 · Detalle de venta por ID" id="327263c9-3463-4599-b74f-7cdcda24f651" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.024">
+    <testcase name="S1-QA-036 HTTP esperado 200 (real 200)" time="0.024" classname="06VentaYReciboS1Qa036DetalleDeVentaPorId"/>
+    <testcase name="1 ítem, cantidad 2" time="0.024" classname="06VentaYReciboS1Qa036DetalleDeVentaPorId"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-037 · Stock descontado tras la venta" id="75434a9d-d9e6-4801-be08-f4e560075ae7" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.020">
+    <testcase name="S1-QA-037 HTTP esperado 200 (real 200)" time="0.020" classname="06VentaYReciboS1Qa037StockDescontadoTrasLaVenta"/>
+    <testcase name="stock = 13" time="0.020" classname="06VentaYReciboS1Qa037StockDescontadoTrasLaVenta"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-038 · Recibo PDF de la venta" id="bc8cfc66-d20f-4fc4-bc60-d747e40037b3" timestamp="2026-11-04T16:35:16.969Z" tests="3" failures="0" errors="0" time="0.021">
+    <testcase name="S1-QA-038 HTTP esperado 200 (real 200)" time="0.021" classname="06VentaYReciboS1Qa038ReciboPdfDeLaVenta"/>
+    <testcase name="Content-Type PDF" time="0.021" classname="06VentaYReciboS1Qa038ReciboPdfDeLaVenta"/>
+    <testcase name="cuerpo no vacío" time="0.021" classname="06VentaYReciboS1Qa038ReciboPdfDeLaVenta"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-039 · Listado de ventas con paginación" id="9f49b26c-8de5-4395-9531-2ea17f45fab2" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.027">
+    <testcase name="S1-QA-039 HTTP esperado 200 (real 200)" time="0.027" classname="06VentaYReciboS1Qa039ListadoDeVentasConPaginacion"/>
+    <testcase name="incluye la venta creada" time="0.027" classname="06VentaYReciboS1Qa039ListadoDeVentasConPaginacion"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-040 · Egreso de 10 después de la venta" id="6e02a31f-d4cb-405c-bfb9-9d3e49e477d3" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.022">
+    <testcase name="S1-QA-040 HTTP esperado 200/201 (real 201)" time="0.022" classname="06VentaYReciboS1Qa040EgresoDe10DespuesDeLaVenta"/>
+  </testsuite>
+  <testsuite name="06 Venta y recibo / S1-QA-041 · Totales de la caja tras venta y egresos" id="563896a7-986a-413d-a67e-ce4e109ba502" timestamp="2026-11-04T16:35:16.969Z" tests="4" failures="0" errors="0" time="0.018">
+    <testcase name="S1-QA-041 HTTP esperado 200 (real 200)" time="0.018" classname="06VentaYReciboS1Qa041TotalesDeLaCajaTrasVentaYEgresos"/>
+    <testcase name="ventas = 100" time="0.018" classname="06VentaYReciboS1Qa041TotalesDeLaCajaTrasVentaYEgresos"/>
+    <testcase name="egresos = 10" time="0.018" classname="06VentaYReciboS1Qa041TotalesDeLaCajaTrasVentaYEgresos"/>
+    <testcase name="saldo sistema = 190" time="0.018" classname="06VentaYReciboS1Qa041TotalesDeLaCajaTrasVentaYEgresos"/>
+  </testsuite>
+  <testsuite name="07 Cierre de caja / S1-QA-042 · Cerrar caja con el monto esperado contado" id="c6886bce-041e-4eb6-b791-46024d5f18d8" timestamp="2026-11-04T16:35:16.969Z" tests="3" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-042 HTTP esperado 200 (real 200)" time="0.017" classname="07CierreDeCajaS1Qa042CerrarCajaConElMontoEsperadoContado"/>
+    <testcase name="saldo sistema 190" time="0.017" classname="07CierreDeCajaS1Qa042CerrarCajaConElMontoEsperadoContado"/>
+    <testcase name="diferencia 0" time="0.017" classname="07CierreDeCajaS1Qa042CerrarCajaConElMontoEsperadoContado"/>
+  </testsuite>
+  <testsuite name="07 Cierre de caja / S1-QA-043 · Historial de la caja" id="4a3bb758-3b5c-4ee3-ab3d-9b8e564ea470" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.024">
+    <testcase name="S1-QA-043 HTTP esperado 200 (real 200)" time="0.024" classname="07CierreDeCajaS1Qa043HistorialDeLaCaja"/>
+    <testcase name="incluye la sesión cerrada" time="0.024" classname="07CierreDeCajaS1Qa043HistorialDeLaCaja"/>
+  </testsuite>
+  <testsuite name="07 Cierre de caja / S1-QA-044 · Vender con la caja cerrada" id="8e398bbe-1fa9-4bfd-b7ce-6d1af23773a9" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.021">
+    <testcase name="S1-QA-044 HTTP esperado 400 (real 400)" time="0.021" classname="07CierreDeCajaS1Qa044VenderConLaCajaCerrada"/>
+  </testsuite>
+  <testsuite name="07 Cierre de caja / S1-QA-045 · Stock sin cambios tras venta rechazada" id="2d2c18b8-332b-4e51-8590-d7a2d2338dda" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-045 HTTP esperado 200 (real 200)" time="0.017" classname="07CierreDeCajaS1Qa045StockSinCambiosTrasVentaRechazada"/>
+    <testcase name="stock sigue en 13" time="0.017" classname="07CierreDeCajaS1Qa045StockSinCambiosTrasVentaRechazada"/>
+  </testsuite>
+  <testsuite name="08 Reportes y dashboard / S1-QA-046 · Resumen del dashboard" id="7d92590e-6226-4ef2-9b39-14189038d6d1" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.014">
+    <testcase name="S1-QA-046 HTTP esperado 200 (real 200)" time="0.014" classname="08ReportesYDashboardS1Qa046ResumenDelDashboard"/>
+  </testsuite>
+  <testsuite name="08 Reportes y dashboard / S1-QA-047 · Reporte de productos en PDF" id="814287e7-fe15-4fc9-80bb-2b37fad2046e" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.016">
+    <testcase name="S1-QA-047 HTTP esperado 200 (real 200)" time="0.016" classname="08ReportesYDashboardS1Qa047ReporteDeProductosEnPdf"/>
+    <testcase name="Content-Type PDF" time="0.016" classname="08ReportesYDashboardS1Qa047ReporteDeProductosEnPdf"/>
+  </testsuite>
+  <testsuite name="08 Reportes y dashboard / S1-QA-048 · Reporte de sesiones de caja en PDF" id="cb6a1097-4c4a-4c98-9795-48d8f670312c" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.031">
+    <testcase name="S1-QA-048 HTTP esperado 200 (real 200)" time="0.031" classname="08ReportesYDashboardS1Qa048ReporteDeSesionesDeCajaEnPdf"/>
+    <testcase name="Content-Type PDF" time="0.031" classname="08ReportesYDashboardS1Qa048ReporteDeSesionesDeCajaEnPdf"/>
+  </testsuite>
+  <testsuite name="08 Reportes y dashboard / S1-QA-049 · Configuración de la tienda" id="a9547730-f0ec-47d5-92d6-ea855d01dd0d" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.017">
+    <testcase name="S1-QA-049 HTTP esperado 200 (real 200)" time="0.017" classname="08ReportesYDashboardS1Qa049ConfiguracionDeLaTienda"/>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-050 · Login usuario ordinario" id="20cb866a-ae5a-474f-9f5c-01398ed9edb9" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.078">
+    <testcase name="S1-QA-050 HTTP esperado 200 (real 200)" time="0.078" classname="09PermisosDeUsuarioOrdinarioS1Qa050LoginUsuarioOrdinario"/>
+    <testcase name="rol QA_VENDEDOR" time="0.078" classname="09PermisosDeUsuarioOrdinarioS1Qa050LoginUsuarioOrdinario"/>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-051 · Listar productos (permitido)" id="ce7de091-e507-42d8-8e42-582538832696" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.021">
+    <testcase name="S1-QA-051 HTTP esperado 200 (real 200)" time="0.021" classname="09PermisosDeUsuarioOrdinarioS1Qa051ListarProductosPermitido"/>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-052 · Listar usuarios (sin permiso)" id="1618f428-1c88-4250-8ef2-5292f261bfae" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.017">
+    <testcase name="S1-QA-052 HTTP esperado 403 (real 400)" time="0.017" classname="09PermisosDeUsuarioOrdinarioS1Qa052ListarUsuariosSinPermiso">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 403 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 09 Permisos de usuario ordinario / S1-QA-052 · Listar usuarios (sin permiso).]]>
+        <![CDATA[Test description: S1-QA-052 HTTP esperado 403 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 403 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 403 ]
+   at Object.eval sandbox-script.js:1:52).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-053 · Crear categoría (sin permiso)" id="cc1ecd7c-b22c-49f9-8b17-2ab8cda1c68b" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.023">
+    <testcase name="S1-QA-053 HTTP esperado 403 (real 400)" time="0.023" classname="09PermisosDeUsuarioOrdinarioS1Qa053CrearCategoriaSinPermiso">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 403 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 09 Permisos de usuario ordinario / S1-QA-053 · Crear categoría (sin permiso).]]>
+        <![CDATA[Test description: S1-QA-053 HTTP esperado 403 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 403 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 403 ]
+   at Object.eval sandbox-script.js:1:53).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-054 · Ver configuración (sin permiso)" id="491ca780-bedb-4ea5-be69-2d9710f1eb11" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.021">
+    <testcase name="S1-QA-054 HTTP esperado 403 (real 400)" time="0.021" classname="09PermisosDeUsuarioOrdinarioS1Qa054VerConfiguracionSinPermiso">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 403 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 09 Permisos de usuario ordinario / S1-QA-054 · Ver configuración (sin permiso).]]>
+        <![CDATA[Test description: S1-QA-054 HTTP esperado 403 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 403 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 403 ]
+   at Object.eval sandbox-script.js:1:54).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-055 · Ver dashboard (sin permiso)" id="cbf0a428-4484-4608-a9fc-e954577ae45c" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.017">
+    <testcase name="S1-QA-055 HTTP esperado 403 (real 400)" time="0.017" classname="09PermisosDeUsuarioOrdinarioS1Qa055VerDashboardSinPermiso">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 403 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 09 Permisos de usuario ordinario / S1-QA-055 · Ver dashboard (sin permiso).]]>
+        <![CDATA[Test description: S1-QA-055 HTTP esperado 403 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 403 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 403 ]
+   at Object.eval sandbox-script.js:1:55).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-056 · Categoría sin permiso no se creó" id="82cf23aa-43b0-47e4-93f6-b058d6dc0c19" timestamp="2026-11-04T16:35:16.969Z" tests="2" failures="0" errors="0" time="0.019">
+    <testcase name="S1-QA-056 HTTP esperado 200 (real 200)" time="0.019" classname="09PermisosDeUsuarioOrdinarioS1Qa056CategoriaSinPermisoNoSeCreo"/>
+    <testcase name="0 resultados" time="0.019" classname="09PermisosDeUsuarioOrdinarioS1Qa056CategoriaSinPermisoNoSeCreo"/>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-057 · Logout" id="cfed8b8b-82f9-443e-9c07-97a9e9d0aa23" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="0" errors="0" time="0.010">
+    <testcase name="S1-QA-057 HTTP esperado 200 (real 200)" time="0.010" classname="09PermisosDeUsuarioOrdinarioS1Qa057Logout"/>
+  </testsuite>
+  <testsuite name="09 Permisos de usuario ordinario / S1-QA-058 · Sesión invalidada tras logout" id="b408448f-c63f-40cb-81d7-28dc3e1d4af5" timestamp="2026-11-04T16:35:16.969Z" tests="1" failures="1" errors="0" time="0.015">
+    <testcase name="S1-QA-058 HTTP esperado 401 (real 400)" time="0.015" classname="09PermisosDeUsuarioOrdinarioS1Qa058SesionInvalidadaTrasLogout">
+      <failure type="AssertionFailure" message="expected 400 to be one of [ 401 ]">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: d5deb2c7-ba15-41b5-b53e-afb34a5d25c4.]]>
+        <![CDATA[Collection name: KODA · Sprint 1 · Baseline de regresión (pre-migración).]]>
+        <![CDATA[Request name: 09 Permisos de usuario ordinario / S1-QA-058 · Sesión invalidada tras logout.]]>
+        <![CDATA[Test description: S1-QA-058 HTTP esperado 401 (real 400).]]>
+        <![CDATA[Error message: expected 400 to be one of [ 401 ].]]>
+        <![CDATA[Stacktrace: AssertionError: expected 400 to be one of [ 401 ]
+   at Object.eval sandbox-script.js:1:58).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,119 @@
+{
+  "id": "94c3f3b9-79a2-4992-87fe-83eb445e17a8",
+  "name": "KODA local (docker compose)",
+  "values": [
+    {
+      "type": "any",
+      "value": "http://localhost:3000/api",
+      "key": "baseUrl"
+    },
+    {
+      "type": "any",
+      "value": "admin@local.test",
+      "key": "superadminEmail"
+    },
+    {
+      "type": "any",
+      "value": "Admin12345!",
+      "key": "superadminPassword"
+    },
+    {
+      "type": "any",
+      "value": "Qa12345!",
+      "key": "sellerPassword"
+    },
+    {
+      "type": "any",
+      "value": "[\"orders.read\",\"orders.create\",\"products.read\",\"categories.read\",\"cash.read\",\"cash.create\"]",
+      "key": "sellerPermNames"
+    },
+    {
+      "type": "any",
+      "value": "20261104113513",
+      "key": "runId"
+    },
+    {
+      "type": "any",
+      "value": 1,
+      "key": "superadminId"
+    },
+    {
+      "type": "any",
+      "value": "[18,19,11,24,25,15]",
+      "key": "sellerPermIds"
+    },
+    {
+      "type": "any",
+      "value": 4,
+      "key": "sellerRoleId"
+    },
+    {
+      "type": "any",
+      "value": 4,
+      "key": "sellerUserId"
+    },
+    {
+      "type": "any",
+      "value": "qa.vendedor.20261104113513@local.test",
+      "key": "sellerEmail"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "categoryId"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "colorId"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "sizeId"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "productId"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "variantId"
+    },
+    {
+      "type": "any",
+      "value": 4,
+      "key": "cashRegisterId"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "cashSessionId"
+    },
+    {
+      "type": "any",
+      "value": 1,
+      "key": "outflowReasonId"
+    },
+    {
+      "type": "any",
+      "value": 10,
+      "key": "outflowsSoFar"
+    },
+    {
+      "type": "any",
+      "value": 3,
+      "key": "orderId"
+    },
+    {
+      "type": "any",
+      "value": 190,
+      "key": "expectedClosing"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-11-04T16:35:23.170Z",
+  "_postman_exported_using": "Newman/6.2.3"
+}

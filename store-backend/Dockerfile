@@ -4,7 +4,8 @@ WORKDIR /app
 # Dependencias primero (capa cacheable mientras no cambie pom.xml).
 COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
-RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
+# sed: quita CRLF si el repo se clonó en Windows (core.autocrlf=true).
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw && ./mvnw dependency:go-offline -B
 
 # Código fuente y build.
 COPY src ./src

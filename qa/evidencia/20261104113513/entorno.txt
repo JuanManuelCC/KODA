@@ -1,0 +1,29 @@
+﻿Fecha (local): 2026-11-04 11:35:13 -05:00
+runId:         20261104113513
+Commit:        17a2a79 - proyecto base
+Rama:          laguero
+
+== Cambios locales sin commit (git status --short)
+ M store-backend/Dockerfile
+?? .env
+?? 07-qa-fullstack.md
+?? qa/
+
+== Contenedores
+NAMES            IMAGE            STATUS          PORTS
+store-frontend   koda-frontend    Up 10 minutes   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+store-backend    koda-backend     Up 10 minutes   8080/tcp
+store-postgres   postgres:18      Up 10 minutes   5432/tcp
+store-redis      redis:7-alpine   Up 10 minutes   6379/tcp
+
+== Imágenes de la app
+
+koda-frontend:latest             bd862b62fabf   2026-11-04 11:23:42 -0500 -05
+koda-backend:latest              ac9c64099fdb   2026-11-04 11:23:38 -0500 -05
+postgres:18                      3a4264520e12   2026-10-27 20:30:24 -0500 -05
+redis:7-alpine                   8da19c7399dc   2026-10-26 11:40:19 -0500 -05
+postgres:16-alpine               0cefaabd882e   2026-10-21 17:57:10 -0500 -05
+
+URL frontend: http://localhost:3000   API (vía proxy Next): http://localhost:3000/api
+
+

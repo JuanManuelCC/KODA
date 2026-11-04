@@ -1,0 +1,2303 @@
+{
+  "info": {
+    "name": "KODA · Sprint 1 · Baseline de regresión (pre-migración)",
+    "description": "Recorrido de regresión del entregable 1 (07-qa-fullstack.md). Cada ejecución usa un {{runId}} distinto, por lo que se puede repetir sin restaurar la BD. Generado por qa/postman/build-collection.js: no editar a mano, regenerar.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 Sin sesión",
+      "item": [
+        {
+          "name": "S1-QA-001 · Listar usuarios sin sesión",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-001 HTTP esperado 401 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([401]));"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  "        if (!pm.environment.get('runIdFromCli')) {",
+                  "          const d = new Date();",
+                  "          const p = (n) => String(n).padStart(2, '0');",
+                  "          pm.environment.set('runId', `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`);",
+                  "        }",
+                  "        console.log('runId de esta corrida: ' + pm.environment.get('runId'));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "**Actor:** anónimo\n\n**Esperado:** HTTP 401"
+          }
+        },
+        {
+          "name": "S1-QA-002 · Login con contraseña incorrecta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-002 HTTP esperado 401 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([401]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "**Actor:** anónimo\n\n**Esperado:** HTTP 401",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{superadminEmail}}\",\n  \"password\": \"contraseña-incorrecta\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 Autenticación",
+      "item": [
+        {
+          "name": "S1-QA-003 · Login superadmin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-003 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        pm.test('rol SUPERADMIN', () => pm.expect(j.user.role).to.eql('SUPERADMIN'));",
+                  "        pm.test('emite cookie de sesión', () => pm.expect(pm.response.headers.filter((h) => h.key.toLowerCase() === 'set-cookie').length).to.be.above(0));",
+                  "        pm.environment.set('superadminId', j.user.id);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{superadminEmail}}\",\n  \"password\": \"{{superadminPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-004 · Usuario actual (/auth/me)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-004 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        pm.test('email coincide', () => pm.expect(pm.response.json().email).to.eql(pm.environment.get('superadminEmail')));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 Roles y usuarios",
+      "item": [
+        {
+          "name": "S1-QA-005 · Permisos agrupados por módulo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-005 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const wanted = JSON.parse(pm.environment.get('sellerPermNames'));",
+                  "        const all = Object.values(pm.response.json()).flat();",
+                  "        const ids = all.filter((p) => wanted.includes(p.name)).map((p) => p.id);",
+                  "        pm.test('existen los permisos del rol vendedor', () => pm.expect(ids.length).to.eql(wanted.length));",
+                  "        pm.environment.set('sellerPermIds', JSON.stringify(ids));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/roles/permissions/group",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles",
+                "permissions",
+                "group"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-006 · Crear rol vendedor de prueba",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-006 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('sellerRoleId', pm.response.json().id); "
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "",
+                  "        pm.request.body.update(pm.request.body.raw.replace('\"__PERM_IDS__\"', pm.environment.get('sellerPermIds')));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA_VENDEDOR_{{runId}}\",\n  \"description\": \"Rol de pruebas QA\",\n  \"permissionIds\": \"__PERM_IDS__\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-007 · Crear usuario ordinario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-007 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        pm.environment.set('sellerUserId', j.id);",
+                  "        pm.environment.set('sellerEmail', j.email);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Vendedor {{runId}}\",\n  \"email\": \"qa.vendedor.{{runId}}@local.test\",\n  \"password\": \"{{sellerPassword}}\",\n  \"roleId\": \"{{sellerRoleId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-008 · Detalle de usuario por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-008 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('email coincide', () => pm.expect(pm.response.json().email).to.eql(pm.environment.get('sellerEmail'))); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{sellerUserId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{sellerUserId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-009 · Editar usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-009 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('nombre actualizado', () => pm.expect(pm.response.json().name).to.match(/Editado$/)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{sellerUserId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "{{sellerUserId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Vendedor {{runId}} Editado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-010 · Buscar usuario por email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-010 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('encuentra exactamente 1', () => pm.expect(pm.response.json().count).to.eql(1)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users?search=qa.vendedor.{{runId}}&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "qa.vendedor.{{runId}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-011 · Paginación de usuarios (limit=1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-011 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        // Por diseño el listado excluye al SUPERADMIN (findAllWithoutSuperAdmin).",
+                  "        pm.test('máx. 1 resultado', () => pm.expect(j.results.length).to.be.at.most(1));",
+                  "        pm.test('count total >= 1', () => pm.expect(j.count).to.be.at.least(1));",
+                  "        pm.test('no lista al superadmin', () => pm.expect(j.results.map((u) => u.role)).to.not.include('SUPERADMIN'));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users?limit=1&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-012 · Crear usuario con email duplicado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-012 HTTP esperado 409 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([409]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 409 (duplicado); no crea registro",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Duplicado\",\n  \"email\": \"qa.vendedor.{{runId}}@local.test\",\n  \"password\": \"{{sellerPassword}}\",\n  \"roleId\": \"{{sellerRoleId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-013 · Detalle de usuario inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-013 HTTP esperado 404 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([404]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "999999"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 404"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 Categorías",
+      "item": [
+        {
+          "name": "S1-QA-014 · Crear categoría",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-014 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('categoryId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Cat {{runId}}\",\n  \"description\": \"Categoría de pruebas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-015 · Detalle de categoría por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-015 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories",
+                "{{categoryId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-016 · Editar categoría",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-016 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('nombre actualizado', () => pm.expect(pm.response.json().name).to.match(/ Ed$/)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories",
+                "{{categoryId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Cat {{runId}} Ed\",\n  \"description\": \"Editada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-017 · Buscar categoría",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-017 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('encuentra la categoría', () => pm.expect(pm.response.json().count).to.be.at.least(1)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories?search=QA Cat {{runId}}&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "QA Cat {{runId}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-018 · Crear categoría duplicada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-018 HTTP esperado 409 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([409]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 409",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Cat {{runId}} Ed\",\n  \"description\": \"dup\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-019 · Detalle de categoría inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-019 HTTP esperado 404 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([404]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories",
+                "999999"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 404"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 Productos, variantes y stock",
+      "item": [
+        {
+          "name": "S1-QA-020 · Crear color",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-020 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('colorId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/colors",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "colors"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Color {{runId}}\",\n  \"hexCode\": \"#112233\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-021 · Crear talla",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-021 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('sizeId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/sizes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "sizes"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA-{{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-022 · Crear producto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-022 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('productId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Producto {{runId}}\",\n  \"purchasePrice\": 20,\n  \"salePrice\": 50,\n  \"categoryId\": \"{{categoryId}}\",\n  \"minStock\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-023 · Crear variante con stock 10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-023 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        pm.test('stock inicial 10', () => pm.expect(j.stock).to.eql(10));",
+                  "        pm.environment.set('variantId', j.id);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/product-variants",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-variants"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"colorId\": \"{{colorId}}\",\n  \"sizeId\": \"{{sizeId}}\",\n  \"stock\": 10,\n  \"minStock\": 2,\n  \"sku\": \"QA-SKU-{{runId}}\",\n  \"salePrice\": 50,\n  \"purchasePrice\": 20\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-024 · Agregar 5 unidades de stock",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-024 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('stock = 15', () => pm.expect(pm.response.json().stock).to.eql(15)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-variants/{{variantId}}/stock/add?quantity=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-variants",
+                "{{variantId}}",
+                "stock",
+                "add"
+              ],
+              "query": [
+                {
+                  "key": "quantity",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-025 · Detalle de variante por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-025 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('stock persistido = 15', () => pm.expect(pm.response.json().stock).to.eql(15)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-variants/{{variantId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-variants",
+                "{{variantId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-026 · Detalle de producto por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-026 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "{{productId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-027 · Editar producto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-027 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('nombre actualizado', () => pm.expect(pm.response.json().name).to.match(/ Ed$/)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "{{productId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Producto {{runId}} Ed\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-028 · Buscar producto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-028 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('encuentra el producto', () => pm.expect(pm.response.json().count).to.be.at.least(1)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?search=QA Producto {{runId}}&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "QA Producto {{runId}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-029 · Detalle de producto inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-029 HTTP esperado 404 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([404]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products",
+                "999999"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 404"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 Caja: apertura y egreso",
+      "item": [
+        {
+          "name": "S1-QA-030 · Crear caja física",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-030 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('cashRegisterId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/registers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "registers"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"QA Caja {{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-031 · Abrir caja con 100",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-031 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  " pm.environment.set('cashSessionId', pm.response.json().id); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/opening/open",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "opening",
+                "open"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cashRegisterId\": \"{{cashRegisterId}}\",\n  \"initialAmount\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-032 · Estado de caja abierta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-032 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('monto inicial 100', () => pm.expect(Number(pm.response.json().initialAmount)).to.eql(100)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cash/opening/status?cashRegisterId={{cashRegisterId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "opening",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "cashRegisterId",
+                  "value": "{{cashRegisterId}}"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-033 · Listar motivos de egreso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-033 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const r = pm.response.json().find((x) => x.isActive && !/devoluci|refund/i.test(x.name));",
+                  "        pm.test('hay un motivo activo utilizable', () => pm.expect(r).to.exist);",
+                  "        if (r) pm.environment.set('outflowReasonId', r.id);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cash/outflow-reasons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "outflow-reasons"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-034 · Egreso de 10 contra el fondo inicial (sin ventas aún)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-034 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "",
+                  "        if (pm.response.code < 300) {",
+                  "          pm.environment.set('outflowId', pm.response.json().id);",
+                  "          pm.environment.set('outflowsSoFar', 10);",
+                  "        } else {",
+                  "          pm.environment.set('outflowsSoFar', 0);",
+                  "        }",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/outflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "outflows"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201: la caja tiene 100 de fondo inicial, un egreso de 10 debe aceptarse",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cashRegisterId\": \"{{cashRegisterId}}\",\n  \"reasonId\": \"{{outflowReasonId}}\",\n  \"amount\": 10,\n  \"description\": \"Egreso QA fondo inicial {{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 Venta y recibo",
+      "item": [
+        {
+          "name": "S1-QA-035 · Crear venta: 2 u. x 50 en efectivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-035 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        pm.test('total = 100', () => pm.expect(Number(j.total)).to.eql(100));",
+                  "        pm.test('asociada a la caja QA', () => pm.expect(j.cashRegisterId).to.eql(Number(pm.environment.get('cashRegisterId'))));",
+                  "        pm.environment.set('orderId', j.id);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{superadminId}}\",\n  \"orderItems\": [\n    {\n      \"productVariantId\": \"{{variantId}}\",\n      \"quantity\": 2\n    }\n  ],\n  \"shippingAddress\": {\n    \"fullName\": \"Cliente QA {{runId}}\"\n  },\n  \"payments\": [\n    {\n      \"method\": \"CASH\",\n      \"amount\": 100\n    }\n  ],\n  \"cashRegisterId\": \"{{cashRegisterId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-036 · Detalle de venta por ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-036 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        pm.test('1 ítem, cantidad 2', () => pm.expect(j.orderItems[0].quantity).to.eql(2));",
+                  "        console.log('Estado de la venta: ' + j.status);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "{{orderId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-037 · Stock descontado tras la venta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-037 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('stock = 13', () => pm.expect(pm.response.json().stock).to.eql(13)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-variants/{{variantId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-variants",
+                "{{variantId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-038 · Recibo PDF de la venta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-038 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        pm.test('Content-Type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('pdf'));",
+                  "        pm.test('cuerpo no vacío', () => pm.expect(pm.response.responseSize).to.be.above(500));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders/{{orderId}}/receipt",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders",
+                "{{orderId}}",
+                "receipt"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-039 · Listado de ventas con paginación",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-039 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('incluye la venta creada', () => pm.expect(pm.response.json().results.map((o) => o.id)).to.include(Number(pm.environment.get('orderId')))); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/orders?limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-040 · Egreso de 10 después de la venta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-040 HTTP esperado 200/201 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200,201]));",
+                  "",
+                  "        if (pm.response.code < 300) pm.environment.set('outflowsSoFar', Number(pm.environment.get('outflowsSoFar')) + 10);",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/outflows",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "outflows"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200/201",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cashRegisterId\": \"{{cashRegisterId}}\",\n  \"reasonId\": \"{{outflowReasonId}}\",\n  \"amount\": 10,\n  \"description\": \"Egreso QA post-venta {{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-041 · Totales de la caja tras venta y egresos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-041 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        const out = Number(pm.environment.get('outflowsSoFar'));",
+                  "        pm.environment.set('expectedClosing', 200 - out);",
+                  "        pm.test('ventas = 100', () => pm.expect(Number(j.totalSales)).to.eql(100));",
+                  "        pm.test(`egresos = ${out}`, () => pm.expect(Number(j.totalOutflows)).to.eql(out));",
+                  "        pm.test(`saldo sistema = ${200 - out}`, () => pm.expect(Number(j.systemBalance)).to.eql(200 - out));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cash/opening/status?cashRegisterId={{cashRegisterId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "opening",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "cashRegisterId",
+                  "value": "{{cashRegisterId}}"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** ventas 100, egresos = suma de egresos aceptados, saldo = 100 + 100 − egresos"
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 Cierre de caja",
+      "item": [
+        {
+          "name": "S1-QA-042 · Cerrar caja con el monto esperado contado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-042 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        const exp = Number(pm.environment.get('expectedClosing'));",
+                  "        pm.test(`saldo sistema ${exp}`, () => pm.expect(Number(j.systemBalance)).to.eql(exp));",
+                  "        pm.test('diferencia 0', () => pm.expect(Number(j.difference)).to.eql(0));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cash/opening/close",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "opening",
+                "close"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200; saldo sistema = monto contado; diferencia 0",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cashRegisterId\": \"{{cashRegisterId}}\",\n  \"closingAmount\": \"{{expectedClosing}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-043 · Historial de la caja",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-043 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  "",
+                  "        const j = pm.response.json();",
+                  "        const rows = Array.isArray(j) ? j : j.results;",
+                  "        pm.test('incluye la sesión cerrada', () => pm.expect(rows.map((s) => s.id)).to.include(Number(pm.environment.get('cashSessionId'))));",
+                  "      "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/cash/opening/history?cashRegisterId={{cashRegisterId}}&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cash",
+                "opening",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "cashRegisterId",
+                  "value": "{{cashRegisterId}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-044 · Vender con la caja cerrada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-044 HTTP esperado 400 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([400]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 400; no crea venta ni descuenta stock",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{superadminId}}\",\n  \"orderItems\": [\n    {\n      \"productVariantId\": \"{{variantId}}\",\n      \"quantity\": 1\n    }\n  ],\n  \"shippingAddress\": {\n    \"fullName\": \"Cliente QA\"\n  },\n  \"payments\": [\n    {\n      \"method\": \"CASH\",\n      \"amount\": 50\n    }\n  ],\n  \"cashRegisterId\": \"{{cashRegisterId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-045 · Stock sin cambios tras venta rechazada",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-045 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('stock sigue en 13', () => pm.expect(pm.response.json().stock).to.eql(13)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/product-variants/{{variantId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "product-variants",
+                "{{variantId}}"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Reportes y dashboard",
+      "item": [
+        {
+          "name": "S1-QA-046 · Resumen del dashboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-046 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "summary"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-047 · Reporte de productos en PDF",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-047 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('Content-Type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('pdf')); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/products/pdf",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "products",
+                "pdf"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-048 · Reporte de sesiones de caja en PDF",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-048 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('Content-Type PDF', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('pdf')); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/cash-sessions/pdf",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "cash-sessions",
+                "pdf"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-049 · Configuración de la tienda",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-049 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/store-config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "store-config"
+              ]
+            },
+            "description": "**Actor:** superadmin\n\n**Esperado:** HTTP 200"
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 Permisos de usuario ordinario",
+      "item": [
+        {
+          "name": "S1-QA-050 · Login usuario ordinario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-050 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('rol QA_VENDEDOR', () => pm.expect(pm.response.json().user.role).to.match(/^QA_VENDEDOR_/)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 200",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{sellerEmail}}\",\n  \"password\": \"{{sellerPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-051 · Listar productos (permitido)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-051 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?limit=5&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-052 · Listar usuarios (sin permiso)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-052 HTTP esperado 403 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([403]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 403"
+          }
+        },
+        {
+          "name": "S1-QA-053 · Crear categoría (sin permiso)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-053 HTTP esperado 403 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([403]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 403",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"No debe crearse {{runId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "S1-QA-054 · Ver configuración (sin permiso)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-054 HTTP esperado 403 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([403]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/store-config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "store-config"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 403"
+          }
+        },
+        {
+          "name": "S1-QA-055 · Ver dashboard (sin permiso)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-055 HTTP esperado 403 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([403]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard",
+                "summary"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 403"
+          }
+        },
+        {
+          "name": "S1-QA-056 · Categoría sin permiso no se creó",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-056 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));",
+                  " pm.test('0 resultados', () => pm.expect(pm.response.json().count).to.eql(0)); "
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categories?search=No debe crearse {{runId}}&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categories"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "No debe crearse {{runId}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-057 · Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-057 HTTP esperado 200 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([200]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "**Actor:** usuario ordinario\n\n**Esperado:** HTTP 200"
+          }
+        },
+        {
+          "name": "S1-QA-058 · Sesión invalidada tras logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"S1-QA-058 HTTP esperado 401 (real \" + pm.response.code + \")\", () => pm.expect(pm.response.code).to.be.oneOf([401]));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "**Actor:** anónimo\n\n**Esperado:** HTTP 401"
+          }
+        }
+      ]
+    }
+  ]
+}
