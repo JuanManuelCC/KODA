@@ -1,0 +1,61 @@
+name: Requisito
+description: Registrar un requisito funcional (RF) o no funcional (RNF) de la ERS de ForjaSys
+title: "[RF-XX] "
+labels: ["tipo:requisito", "estado:registrado"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: ID del requisito
+      description: Igual que en la ERS (RF-01 … RF-12, RNF-01 … RNF-06)
+      placeholder: RF-07
+    validations:
+      required: true
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+      placeholder: Registrar una venta con detalle, IGV y método de pago, validando y descontando stock.
+    validations:
+      required: true
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: Prioridad
+      options: [Alta, Media, Baja]
+    validations:
+      required: true
+  - type: input
+    id: fuente
+    attributes:
+      label: Fuente
+      description: Ilación del catálogo, entrevista FUE-001, regla de negocio, etc.
+      placeholder: ILA-002-1, FUE-001
+    validations:
+      required: true
+  - type: input
+    id: rol
+    attributes:
+      label: Rol / Proceso
+      placeholder: Cajero-vendedor / P1
+  - type: textarea
+    id: criterio
+    attributes:
+      label: Criterio de aceptación (Dado / Cuando / Entonces)
+      placeholder: |
+        Dado un producto con stock 5,
+        cuando el cajero registra una venta de 6 unidades,
+        entonces el sistema rechaza la venta con el mensaje de stock insuficiente y el stock sigue en 5.
+    validations:
+      required: true
+  - type: textarea
+    id: pruebas
+    attributes:
+      label: Pruebas vinculadas
+      description: Casos JUnit (PU-xx), Selenium (CP-xx) o JMeter que lo verifican
+      placeholder: PU-01, PU-02, PU-03, CP-04, CP-05
+  - type: input
+    id: version_ers
+    attributes:
+      label: Versión de la ERS
+      placeholder: v1.1

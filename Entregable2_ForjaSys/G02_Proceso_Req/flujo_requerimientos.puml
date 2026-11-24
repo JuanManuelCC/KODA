@@ -1,0 +1,34 @@
+@startuml flujo_requerimientos
+' G02 - Flujo de estados de requisitos y solicitudes de cambio (ForjaSys)
+' Cada estado corresponde a una etiqueta "estado:*" en GitHub Issues
+' y a una columna del tablero de GitHub Projects.
+title ForjaSys — Ciclo de vida de un requisito / solicitud de cambio
+
+hide empty description
+skinparam state {
+  BackgroundColor #F5F7FA
+  BorderColor #3B5B92
+  ArrowColor #3B5B92
+}
+
+[*] --> Registrado : issue creado con plantilla\n(Requisito o Solicitud de cambio)
+
+state Registrado   : etiqueta estado:registrado\nresp.: Analista
+state Analizado    : etiqueta estado:analizado\ncriterio Dado/Cuando/Entonces,\nimpacto, costo y plazo
+state Aprobado     : etiqueta estado:aprobado\nentra a la línea base\n(ERS nueva versión)
+state Rechazado    : etiqueta estado:rechazado\nsustento registrado
+state Implementado : etiqueta estado:implementado\ncommit SVN [RF-xx] / [CC-xx]
+state Verificado   : etiqueta estado:verificado\nPU / CP / JMeter en verde
+state Cerrado      : etiqueta estado:cerrado\nissue cerrado con evidencia
+
+Registrado --> Analizado : análisis\n(Analista)
+Analizado --> Aprobado : decisión del cliente /\nAdministrador
+Analizado --> Rechazado : fuera de alcance,\nplazo o costo
+Aprobado --> Implementado : desarrollo + commit\n(Desarrollador)
+Implementado --> Verificado : pruebas pasan\n(Calidad)
+Verificado --> Implementado : prueba falla\n(defecto vinculado)
+Verificado --> Cerrado : evidencia adjunta\n(Configuración)
+Rechazado --> Cerrado : se cierra como\n"not planned"
+Cerrado --> [*]
+
+@enduml

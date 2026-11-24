@@ -1,0 +1,76 @@
+name: Solicitud de cambio
+description: Proponer un cambio sobre un requisito de la línea base (pasa por análisis de impacto y decisión)
+title: "[CC-XX] "
+labels: ["tipo:cambio", "estado:registrado"]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: ID del cambio
+      placeholder: CC-01
+    validations:
+      required: true
+  - type: input
+    id: solicitante
+    attributes:
+      label: Solicitante y fecha
+      placeholder: Gerente de Forjasur (representado) — 24-11-2026
+    validations:
+      required: true
+  - type: input
+    id: requisitos
+    attributes:
+      label: Requisitos afectados
+      placeholder: RF-05, RF-07
+    validations:
+      required: true
+  - type: textarea
+    id: motivo
+    attributes:
+      label: Motivo
+    validations:
+      required: true
+  - type: textarea
+    id: impacto_diseno
+    attributes:
+      label: Impacto en el diseño
+      description: Clases, tablas, endpoints, pantallas y diagramas que cambian
+    validations:
+      required: true
+  - type: input
+    id: costo
+    attributes:
+      label: Costo estimado (horas)
+    validations:
+      required: true
+  - type: input
+    id: plazo
+    attributes:
+      label: Plazo
+    validations:
+      required: true
+  - type: textarea
+    id: riesgos
+    attributes:
+      label: Riesgos
+    validations:
+      required: true
+  - type: textarea
+    id: pruebas
+    attributes:
+      label: Pruebas afectadas
+      placeholder: PU-01, PU-14, CP-04
+    validations:
+      required: true
+  - type: dropdown
+    id: decision
+    attributes:
+      label: Decisión
+      options: [Pendiente, Aprobado, Rechazado]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión afectada
+      placeholder: ERS v1.1 → v1.2 / producto v0.9.0

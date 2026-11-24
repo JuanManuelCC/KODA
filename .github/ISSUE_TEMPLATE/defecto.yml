@@ -1,0 +1,41 @@
+name: Defecto
+description: Reportar un defecto encontrado en pruebas (JUnit, Selenium, JMeter o manual)
+title: "[DEF] "
+labels: ["tipo:defecto", "estado:registrado"]
+body:
+  - type: input
+    id: requisito
+    attributes:
+      label: Requisito vinculado
+      placeholder: RF-07
+    validations:
+      required: true
+  - type: dropdown
+    id: severidad
+    attributes:
+      label: Severidad
+      options: [Crítica, Mayor, Menor]
+    validations:
+      required: true
+  - type: input
+    id: prueba
+    attributes:
+      label: Prueba que lo detectó
+      placeholder: PU-03 / CP-05
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducir
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Resultado esperado vs. obtenido
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versión del producto (revisión SVN / etiqueta)
+      placeholder: r12 / v0.9.0

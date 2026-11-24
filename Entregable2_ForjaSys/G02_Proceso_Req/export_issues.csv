@@ -1,0 +1,8 @@
+﻿"numero","id","titulo","tipo","estado","prioridad","github","creado","cerrado","url"
+"1","RF-04","[RF-04] Registrar entradas, salidas y ajustes de inventario","tipo:requisito","estado:aprobado","prioridad:alta","OPEN","2026-11-24T20:24:19Z",,"https://github.com/iccoscco/KODA/issues/1"
+"2","RF-07","[RF-07] Registrar venta con IGV y método de pago validando stock","tipo:requisito","estado:aprobado","prioridad:alta","OPEN","2026-11-24T20:24:21Z",,"https://github.com/iccoscco/KODA/issues/2"
+"3","RF-08","[RF-08] Emitir boleta o factura electrónica y enviarla a SUNAT","tipo:requisito","estado:aprobado","prioridad:alta","OPEN","2026-11-24T20:24:24Z",,"https://github.com/iccoscco/KODA/issues/3"
+"4","RF-10","[RF-10] Anular comprobante con nota de crédito y reponer stock","tipo:requisito","estado:aprobado","prioridad:alta","OPEN","2026-11-24T20:24:26Z",,"https://github.com/iccoscco/KODA/issues/4"
+"5","RF-12","[RF-12] Reporte consolidado de ventas e inventario valorizado","tipo:requisito","estado:aprobado","prioridad:alta","OPEN","2026-11-24T20:24:28Z",,"https://github.com/iccoscco/KODA/issues/5"
+"6","CC-01","[CC-01] Mostrar alerta de stock mínimo al registrar la venta","tipo:cambio","estado:aprobado","","OPEN","2026-11-24T20:24:30Z",,"https://github.com/iccoscco/KODA/issues/6"
+"7","CC-02","[CC-02] Enviar el comprobante por WhatsApp","tipo:cambio","estado:rechazado","","CLOSED","2026-11-24T20:24:32Z","2026-11-24T20:29:21Z","https://github.com/iccoscco/KODA/issues/7"
