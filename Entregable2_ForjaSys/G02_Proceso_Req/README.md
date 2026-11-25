@@ -1,5 +1,11 @@
 # G02 · Proceso de requerimientos (ForjaSys)
 
+## Estado comprobado de la entrega (24-11-2026)
+
+Los siete issues ya fueron creados en [`iccoscco/KODA`](https://github.com/iccoscco/KODA/issues): cinco requisitos (#1–#5), CC-01 (#6) y CC-02 (#7). El recorrido documentado está en `recorrido.md`; CC-02 está rechazado y cerrado. **No vuelvan a ejecutar `02_crear_issues.ps1`**, pues duplicaría las solicitudes. Las instrucciones de abajo explican cómo se preparó el material y cómo actualizarlo en un entorno nuevo.
+
+CC-01 cuenta con una propuesta de código y prueba en la rama de integración. Véase `CC-01_trazabilidad.md` para el contrato, el caso límite y los pasos pendientes de verificación. No se debe etiquetar como `verificado` ni cerrar hasta que estén la evidencia de ejecución, la actualización de ERS/SDD y el registro de configuración exigido por G05.
+
 ## Qué hay aquí
 
 | Archivo | Para qué |
