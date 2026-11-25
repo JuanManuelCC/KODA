@@ -3,7 +3,7 @@
 - **Solicitud:** [issue #6](https://github.com/iccoscco/KODA/issues/6)
 - **Requisitos relacionados:** RF-05 y RF-07
 - **Línea de base:** rama `laguero`, commit `0560016`
-**Estado de esta evidencia:** código y prueba unitarias propuestos en una rama de integración; la verificación de interfaz, el reflejo en ERS/SDD y la revisión SVN siguen pendientes.
+**Estado de esta evidencia:** código y pruebas unitarias en una rama de integración; la verificación de interfaz, el reflejo en ERS/SDD y la revisión SVN siguen pendientes.
 
 ## Regla verificable
 
@@ -37,10 +37,10 @@ Ejemplo del campo añadido a la respuesta de creación, con los demás campos de
 
 ## Comprobación y cierre
 
-1. Ejecutar la prueba unitaria con Java 21: `cd store-backend; .\mvnw.cmd -Dtest=OrderServiceStockAlertTest test`.
-2. Confirmar la compilación del frontend: `cd store-frontend; npm ci; npm run build`.
-3. Con la API y la interfaz iniciadas, registrar dos ventas de prueba con stocks 10/5, cantidades 4 y 5. Verificar que la alerta aparece solo en la segunda y que el mensaje sigue visible después de cerrarse el formulario. Registrar captura y versión probada.
-4. Actualizar el criterio RF-07 de la ERS y la secuencia de venta del SDD en los documentos del equipo. Registrar la revisión SVN correspondiente cuando G05 esté configurado.
-5. Recién con la evidencia de los pasos anteriores, mover CC-01 a `verificado` y cerrar el issue. Mientras tanto, mantenerlo abierto.
+**Resultados obtenidos el 24-11-2026:** con Java 21, `mvnw.cmd -Dtest=OrderServiceStockAlertTest test` finalizó con 2 pruebas aprobadas y 0 fallos. `npm run build` finalizó correctamente. ESLint sobre los tres archivos del frontend modificados terminó sin errores; el lint de todo el frontend aún falla por 37 errores y 41 advertencias en distintas partes de la base existente.
+
+1. Con la API y la interfaz iniciadas, registrar dos ventas de prueba con stocks 10/5, cantidades 4 y 5. Verificar que la alerta aparece solo en la segunda y que el mensaje sigue visible después de cerrarse el formulario. Registrar captura y versión probada.
+2. Actualizar el criterio RF-07 de la ERS y la secuencia de venta del SDD en los documentos del equipo. Registrar la revisión SVN correspondiente cuando G05 esté configurado.
+3. Recién con la evidencia de los pasos anteriores, mover CC-01 a `verificado` y cerrar el issue. Mientras tanto, mantenerlo abierto.
 
 **Límite de alcance:** esta alerta no demuestra la emisión electrónica a SUNAT, la nota de crédito ni el resto de los requisitos de ForjaSys.
